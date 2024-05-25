@@ -5,12 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
-class TaskController extends Controller
-{
-    public function create(Request $request)
-    {
+// All the Eloquent implementation here are pretty straightforward, so I will escape most of the comments
+class TaskController extends Controller {
+    public function create(Request $request) {
         $request->validate([
             'name' => ['required'],
         ]);
@@ -21,14 +19,17 @@ class TaskController extends Controller
             'status' => $request->status ?? null,
             'deadline' => explode('T', $request->deadline)[0] ?? null,
             'priority' => $request->priority ?? null,
+            // Im setting the user to null at creation so we can se when the task is possessed
+            // but Im aware that the best practice would be to have a field to register te creator and another for the owner
             'user_id' => null
         ]);
 
-        return redirect()->back()->with('success_message', 'Task created!');
+        $task->save();
+
+        return redirect()->back();
     }
 
-    public function update(Request $request)
-    {
+    public function update(Request $request) {
         $task = Task::find($request->id);
 
         $task->name = $request->name ?? $task->name;
@@ -39,36 +40,37 @@ class TaskController extends Controller
 
         $task->save();
 
-
-        return redirect()->back()->with('success_message', 'Task updated!');
+        return redirect()->back();
     }
 
-    public function destroy(Request $request)
-    {
+    public function destroy(Request $request) {
         Task::destroy($request->id);
-        return redirect()->back()->with('success_message', 'Task deleted!');
+        return redirect()->back();
 
     }
 
-    public function take(Request $request)
-    {
+    public function take(Request $request) {
         $task = Task::find($request->id);
+
         $task->user_id = $request->user()->id;
         $task->status = 'in_progress';
+
         $task->save();
-        return redirect()->back()->with('success_message', 'Task taken!');
+
+        return redirect()->back();
     }
 
-    public function finish(Request $request)
-    {
+    public function finish(Request $request) {
         $task = Task::find($request->id);
+
         $task->status = 'completed';
+
         $task->save();
-        return redirect()->back()->with('success_message', 'Task complete!');
+
+        return redirect()->back();
     }
 
-    public function all()
-    {
+    public function all() {
         $tasks = Task::with('user')->get();
 
         $tasks = $tasks->map(function ($task) {
@@ -87,24 +89,21 @@ class TaskController extends Controller
         return $tasks;
     }
 
-    public function getStatusList()
-    {
+    public function getStatusList() {
         return [
-                'backlog' => 'Waiting confirmation',
-                'pending' => 'Pending',
-                'in_progress' => 'In Progress',
-                'paused' => 'Paused',
-                'completed' => 'Completed'
+            'backlog' => 'Waiting confirmation',
+            'pending' => 'Pending',
+            'in_progress' => 'In Progress',
+            'paused' => 'Paused',
+            'completed' => 'Completed'
         ];
     }
 
-    public function getPriorityList()
-    {
+    public function getPriorityList() {
         return [
-                '1' => 'Normal',
-                '2' => 'Moderate',
-                '3' => 'Urgent'
+            '1' => 'Normal',
+            '2' => 'Moderate',
+            '3' => 'Urgent'
         ];
     }
-
 }

@@ -27,9 +27,13 @@ Route::get('/', function () {
 });
 
 Route::middleware('auth')->group(function () {
+
+    // I brough the dashboard endpoint to the auth group, so we can evict an unecessary repetition
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard', [
             'tasks' => (new TaskController())->all(),
+            // statusList and priorityList are static properties that Im sending to the dashboard component to compose the options of the selectlist components in the modal
+            // Even though it is a test project and these are static lists, I've make the decision to put all the relevant information on the api
             'statusList' => (new TaskController())->getStatusList(),
             'priorityList' => (new TaskController())->getPriorityList()
         ]);
@@ -46,4 +50,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
