@@ -17,3 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::middleware('auth:sanctum',)->get('/task', function (Request $request) {
+    return [0 => ['name' => 'Review article 1', 'desc' => 'Review article 123 for spelling issues', 'status' => 'pending_review']];
+});

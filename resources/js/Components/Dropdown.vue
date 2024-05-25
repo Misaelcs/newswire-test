@@ -32,12 +32,17 @@ const widthClass = computed(() => {
 });
 
 const alignmentClasses = computed(() => {
-    if (props.align === 'left') {
-        return 'origin-top-left left-0';
-    } else if (props.align === 'right') {
-        return 'origin-top-right right-0';
-    } else {
-        return 'origin-top';
+    switch (props.align) {
+        case 'left':
+            return 'origin-top-left left-0';
+        case 'right':
+            return 'origin-top-right right-0';
+        case 'bottom-left':
+            return 'origin-bottom-left left-0 bottom-0';
+        case 'bottom-right':
+            return 'origin-bottom-right right-0 bottom-0';
+        default:
+            return 'origin-top-left left-0';
     }
 });
 

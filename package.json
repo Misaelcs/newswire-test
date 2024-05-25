@@ -16,5 +16,13 @@
         "tailwindcss": "^3.2.1",
         "vite": "^4.0.0",
         "vue": "^3.2.41"
+    },
+    "dependencies": {
+        "@ckeditor/ckeditor5-build-classic": "^41.4.2",
+        "@ckeditor/ckeditor5-vue": "^5.1.0",
+        "@vuepic/vue-datepicker": "^8.6.0",
+        "notyf": "^3.10.0",
+        "oh-vue-icons": "^1.0.0-rc3",
+        "vue-sweetalert2": "^5.0.10"
     }
 }
