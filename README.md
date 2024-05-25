@@ -3,7 +3,7 @@
 ## Name: Misael Sauceda
 ## Email: mcsdev.contato@gmail.com
 
-In my submission for this test I've used the sample boilerplate code in InertiaJS and implemented the requirements while trying to maintain a code style similar to the one in the boilerplate. I would be happy to explain the choices I've made and discuss further.
+In my submission for this test I've used the sample boilerplate code with InertiaJS and implemented the requirements while trying to maintain a code style similar to the one in the boilerplate. I would be happy to explain the choices I've made and discuss further.
 
 The only additional step to the local deployment proccess that is needed is to set the APP_ENV to 'production' if you want to see the error information supressed by the error handler requested.
 
